@@ -1,0 +1,5 @@
+owncloud-spreedme (0.0.4-1+git20151215~1~1eaf1a1) trusty; urgency=low
+
+  * Initial packaged release.
+
+ -- Joachim Bauch <bauch@struktur.de>  Tue, 15 Dec 2015 16:11:31 +0100

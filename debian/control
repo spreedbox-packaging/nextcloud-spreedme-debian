@@ -1,0 +1,35 @@
+Source: owncloud-spreedme
+Section: web
+Priority: extra
+Maintainer: struktur AG <opensource@struktur.de>
+Uploaders:
+ Joachim Bauch <bauch@struktur.de>
+Build-Depends:
+ debhelper (>= 9)
+Standards-Version: 3.9.5
+
+Package: owncloud-spreedme
+Architecture: all
+Depends:
+ ${misc:Depends},
+ owncloud-spreedme-app (= ${binary:Version}),
+ owncloud-spreedme-plugin (= ${binary:Version})
+Description: Owncloud app to embedd spreed-webrtc
+ This package installs the Owncloud app to embedd spreed-webrtc.
+
+Package: owncloud-spreedme-app
+Architecture: all
+Depends:
+ ${misc:Depends},
+ owncloud
+Description: Owncloud app to communicate with spreed-webrtc
+ This package installs the Owncloud app to communicate with the spreed-webrtc
+ plugin.
+
+Package: owncloud-spreedme-plugin
+Architecture: all
+Depends:
+ ${misc:Depends},
+ spreed-webrtc
+Description: spreed-webrtc plugin to communicate with Owncloud
+ This package installs spreed-webrtc plugin to communicate with Owncloud.

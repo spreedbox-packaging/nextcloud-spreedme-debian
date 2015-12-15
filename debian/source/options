@@ -1,0 +1,7 @@
+tar-ignore
+tar-ignore = "build/artifacts"
+tar-ignore = "build/artifacts/*"
+tar-ignore = "js/node_modules"
+tar-ignore = "js/node_modules/*"
+tar-ignore = "js/coverage"
+tar-ignore = "js/coverage/*"

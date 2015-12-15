@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+#export DH_VERBOSE=1
+export DH_OPTIONS
+#export DEB_BUILD_OPTIONS=nocheck
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	# no building required
+
+override_dh_auto_install:
+	dh_auto_install
+
+	# Configuration for Owncloud application
+	cp config/config.php.in debian/owncloud-spreedme-app/etc/spreedme/owncloud/config.php
+	ln -s /etc/spreedme/owncloud/config.php debian/owncloud-spreedme-app/usr/lib/owncloud/www/apps/spreedme/config
+
+	# Configuration for spreed-webrtc plugin
+	mv extra/static/config/OwnCloudConfig.js.in debian/owncloud-spreedme-plugin/etc/spreedme/owncloud/OwnCloudConfig.js
+	ln -s /etc/spreedme/owncloud/OwnCloudConfig.js debian/owncloud-spreedme-plugin/usr/lib/owncloud-spreedme/extra/static/config/OwnCloudConfig.js

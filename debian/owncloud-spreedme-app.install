@@ -1,0 +1,12 @@
+appinfo/*	usr/lib/owncloud/www/apps/spreedme/appinfo
+changelog/*	usr/lib/owncloud/www/apps/spreedme/changelog
+controller/*	usr/lib/owncloud/www/apps/spreedme/controller
+css/*	usr/lib/owncloud/www/apps/spreedme/css
+debug/*	usr/lib/owncloud/www/apps/spreedme/debug
+helper/*	usr/lib/owncloud/www/apps/spreedme/helper
+img/*	usr/lib/owncloud/www/apps/spreedme/img
+js/*	usr/lib/owncloud/www/apps/spreedme/js
+security/*	usr/lib/owncloud/www/apps/spreedme/security
+settings/*	usr/lib/owncloud/www/apps/spreedme/settings
+templates/*	usr/lib/owncloud/www/apps/spreedme/templates
+user/*	usr/lib/owncloud/www/apps/spreedme/user
