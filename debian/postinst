@@ -15,6 +15,9 @@ case "$1" in
         if [ -e "/etc/init.d/spreed-webrtc" ]; then
             invoke spreed-webrtc restart || true
         fi
+        if [ -x "/usr/bin/occ" ]; then
+            /usr/bin/occ app:enable spreedme --no-interaction || true
+        fi
         ;;
 
     abort-upgrade|abort-remove|abort-configure)
