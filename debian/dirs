@@ -1,2 +1,3 @@
 etc/spreedme/owncloud
 usr/lib/owncloud/www/apps/spreedme/config
+usr/lib/owncloud/www/apps/spreedme/extra/static/config

@@ -3,6 +3,7 @@ changelog/*	usr/lib/owncloud/www/apps/spreedme/changelog
 controller/*	usr/lib/owncloud/www/apps/spreedme/controller
 css/*	usr/lib/owncloud/www/apps/spreedme/css
 debug/*	usr/lib/owncloud/www/apps/spreedme/debug
+extra/* usr/lib/owncloud/www/apps/spreedme/extra
 helper/*	usr/lib/owncloud/www/apps/spreedme/helper
 img/*	usr/lib/owncloud/www/apps/spreedme/img
 js/*	usr/lib/owncloud/www/apps/spreedme/js

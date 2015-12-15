@@ -11,25 +11,15 @@ Standards-Version: 3.9.5
 Package: owncloud-spreedme
 Architecture: all
 Depends:
- ${misc:Depends},
- owncloud-spreedme-app (= ${binary:Version}),
- owncloud-spreedme-plugin (= ${binary:Version})
+ ${misc:Depends}
+Provides:
+ owncloud-spreedme-app,
+ owncloud-spreedme-plugin
+Replaces:
+ owncloud-spreedme-app,
+ owncloud-spreedme-plugin
+Conflicts:
+ owncloud-spreedme-app,
+ owncloud-spreedme-plugin
 Description: Owncloud app to embedd spreed-webrtc
  This package installs the Owncloud app to embedd spreed-webrtc.
-
-Package: owncloud-spreedme-app
-Architecture: all
-Depends:
- ${misc:Depends},
- owncloud
-Description: Owncloud app to communicate with spreed-webrtc
- This package installs the Owncloud app to communicate with the spreed-webrtc
- plugin.
-
-Package: owncloud-spreedme-plugin
-Architecture: all
-Depends:
- ${misc:Depends},
- spreed-webrtc
-Description: spreed-webrtc plugin to communicate with Owncloud
- This package installs spreed-webrtc plugin to communicate with Owncloud.
