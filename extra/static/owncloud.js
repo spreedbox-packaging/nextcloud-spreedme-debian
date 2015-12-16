@@ -21,6 +21,7 @@ define([
 	'use strict';
 
 	var HAS_PARENT = window !== parent;
+	// TODO(leon): Create helper script with this function, as we also need it in webrtc.js
 	var ALLOWED_PARTNERS = (function() {
 		var allowed = [];
 		var origin = OwnCloudConfig.OWNCLOUD_ORIGIN;
@@ -33,8 +34,10 @@ define([
 			var location = document.location;
 			var protocol = location.protocol;
 			var hostname = location.hostname;
-			var port = (isPort ? origin : ':' + location.port);
-			allowed.push(protocol + "//" + hostname + port);
+			var port = (isPort ? origin.substring(1) : location.port);
+			var isDefaultPort = (protocol === 'http:' && port === '80') || (protocol === 'https:' && port === '443');
+			var optionalPort = (port && !isDefaultPort ? ':' + port : '');
+			allowed.push(protocol + "//" + hostname + optionalPort);
 		}
 
 		return allowed;
@@ -426,7 +429,7 @@ define([
 				FileSelector.prototype.log = function(message) {
 					var args = Array.prototype.slice.call(arguments);
 					args.unshift("FileSelector:");
-					console.log.apply(console, args);
+					log.apply(log, args);
 				};
 				FileSelector.prototype.init = function() {
 					var popup = $window.open(
@@ -599,7 +602,7 @@ define([
 
 						if (!file && !(file instanceof "FileWriterFake")) {
 							// We need file.file :)
-							console.log("No file found. Not downloading", file);
+							log("No file found. Not downloading", file);
 							return;
 						}
 
