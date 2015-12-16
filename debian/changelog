@@ -1,3 +1,12 @@
+owncloud-spreedme (0.1.0-1) trusty; urgency=low
+
+  [ Leon Klingele ]
+  * Update 'Temporary Password' page text & layout
+  * Add support to open 'Temporary Password' window through spreed-webrtc
+  * 0.1.0
+
+ -- Joachim Bauch <bauch@struktur.de>  Wed, 16 Dec 2015 16:25:20 +0100
+
 owncloud-spreedme (0.0.4-1+git20151216~3~749a270) trusty; urgency=low
 
   [ Leon Klingele ]
