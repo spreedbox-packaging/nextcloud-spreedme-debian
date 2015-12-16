@@ -12,11 +12,23 @@ invoke() {
 
 case "$1" in
     configure)
+        if [ -e "/usr/lib/owncloud/www/core/shipped.json" ]; then
+            sed -i 's|"shippedApps": \[$|"shippedApps": \["spreedme",|;' /usr/lib/owncloud/www/core/shipped.json
+        fi
         if [ -e "/etc/init.d/spreed-webrtc" ]; then
             invoke spreed-webrtc restart || true
         fi
-        if [ -x "/usr/bin/occ" ]; then
-            /usr/bin/occ app:enable spreedme --no-interaction || true
+        if [ -e "/etc/init.d/php5-fpm" ]; then
+            invoke php5-fpm restart || true
+        fi
+        ;;
+
+    triggered)
+        if [ -e "/usr/lib/owncloud/www/core/shipped.json" ]; then
+            sed -i 's|"shippedApps": \[$|"shippedApps": \["spreedme",|;' /usr/lib/owncloud/www/core/shipped.json
+        fi
+        if [ -e "/etc/init.d/php5-fpm" ]; then
+            invoke php5-fpm restart || true
         fi
         ;;
 
