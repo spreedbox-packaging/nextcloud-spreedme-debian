@@ -1,3 +1,17 @@
+owncloud-spreedme (0.0.4-1+git20151216~1~3b092a1) trusty; urgency=low
+
+  [ Joachim Bauch ]
+  * Enable spreedme app during installation.
+  * Handle case where server has no name (but only an address).
+
+  [ Leon Klingele ]
+  * Dirty fix for require.js base path issue
+
+  [ Joachim Bauch ]
+  * Add configuration folder to list of allowed directories in autoloader.
+
+ -- Joachim Bauch <bauch@struktur.de>  Wed, 16 Dec 2015 11:37:28 +0100
+
 owncloud-spreedme (0.0.4-1+git20151215~2~1eaf1a1) trusty; urgency=low
 
   * Don't split into multiple packages.
