@@ -1,3 +1,13 @@
+owncloud-spreedme (0.0.4-1+git20151216~3~749a270) trusty; urgency=low
+
+  [ Leon Klingele ]
+  * Add TODO
+  * Always use custom console.log function
+  * Add 'Temporary Password' tests to debug
+  * Fix auto host detection when running on default port (80 for http, 443 for https)
+
+ -- Joachim Bauch <bauch@struktur.de>  Wed, 16 Dec 2015 14:25:39 +0100
+
 owncloud-spreedme (0.0.4-1+git20151216~2~3b092a1) trusty; urgency=low
 
   * Mark app as "default_enable".
