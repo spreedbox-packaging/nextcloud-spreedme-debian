@@ -1,3 +1,10 @@
+owncloud-spreedme (0.0.4-1+git20151216~2~3b092a1) trusty; urgency=low
+
+  * Mark app as "default_enable".
+  * Add spreedme to list of shipped apps.
+
+ -- Joachim Bauch <bauch@struktur.de>  Wed, 16 Dec 2015 13:14:00 +0100
+
 owncloud-spreedme (0.0.4-1+git20151216~1~3b092a1) trusty; urgency=low
 
   [ Joachim Bauch ]
