@@ -1,3 +1,9 @@
+owncloud-spreedme (0.1.1-2) trusty; urgency=low
+
+  * Output something about running occ upgrade.
+
+ -- Joachim Bauch <bauch@struktur.de>  Thu, 14 Jan 2016 16:22:40 +0100
+
 owncloud-spreedme (0.1.1-1) trusty; urgency=low
 
   [ Morris Jobke ]
