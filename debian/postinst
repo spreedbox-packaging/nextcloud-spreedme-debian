@@ -21,6 +21,10 @@ case "$1" in
         if [ -e "/etc/init.d/php5-fpm" ]; then
             invoke php5-fpm restart || true
         fi
+        echo "***************************************************************"
+        echo "** Please run 'occ upgrade' after the installation to finish **"
+        echo "** upgrading the spreedme ownCloud application!              **"
+        echo "***************************************************************"
         ;;
 
     triggered)
