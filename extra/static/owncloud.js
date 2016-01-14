@@ -80,13 +80,19 @@ define([
 
 			app.run(["$rootScope", "$window", "$q", "$timeout", "ownCloud", "mediaStream", "appData", "userSettingsData", "rooms", "restURL", "alertify", "chromeExtension", function($rootScope, $window, $q, $timeout, ownCloud, mediaStream, appData, userSettingsData, rooms, restURL, alertify, chromeExtension) {
 
+				var redirectToOwncloud = function() {
+					// This only redirects to the ownCloud host. No base path included!
+					// TODO(leon): Fix this somehow.
+					$window.parent.location.replace(ALLOWED_PARTNERS[0]);
+				};
+
 				if (!HAS_PARENT) {
-					var redirect = function() {
-						// This only redirects to the ownCloud host. No base path included!
-						// TODO(leon): Fix this somehow.
-						$window.location.replace(ALLOWED_PARTNERS[0]);
-					};
-					alertify.dialog.exec("error", "Error", "Please do not directly access this service. Open the Spreed.ME app in your ownCloud installation instead.", redirect, redirect);
+					alertify.dialog.error(
+						"Access denied",
+						"Please do not directly access this service. Open the Spreed.ME app in your ownCloud installation instead.",
+						redirectToOwncloud,
+						redirectToOwncloud
+					);
 					// Workaround to prevent app from continuing
 					appData.authorizing(true);
 					return;
@@ -133,7 +139,6 @@ define([
 					}
 				})();
 
-				var currentRoom;
 				var online = ownCloud.deferreds.online;
 				var isOnline = false;
 				var admin = ownCloud.deferreds.admin;
@@ -141,6 +146,8 @@ define([
 				var guest = ownCloud.deferreds.guest;
 				var isGuest = false;
 				var authorize = ownCloud.deferreds.authorize;
+				var temporaryPassword = ownCloud.deferreds.features.temporaryPassword;
+				var isTemporaryPasswordFeatureEnabled = false;
 
 				appData.e.on("selfReceived", function(event, data) {
 					log("selfReceived", data);
@@ -166,9 +173,25 @@ define([
 				admin.promise.then(function() {
 					isAdmin = true;
 				});
-				guest.promise.then(function() {
-					isGuest = true;
-					askForGuestPassword();
+				guest.promise.then(function(guest) {
+					isGuest = guest;
+				});
+				temporaryPassword.promise.then(function(enabled) {
+					isTemporaryPasswordFeatureEnabled = enabled;
+				});
+				$q.all([guest.promise, temporaryPassword.promise]).then(function() {
+					if (isGuest) {
+						if (isTemporaryPasswordFeatureEnabled) {
+							askForTemporaryPassword();
+						} else {
+							alertify.dialog.error(
+								"ownCloud account required",
+								"Please log in into your ownCloud account to use use this service.",
+								redirectToOwncloud,
+								redirectToOwncloud
+							);
+						}
+					}
 				});
 
 				var getUserSettings = function() {
@@ -182,33 +205,49 @@ define([
 					settingsScope.saveSettings();
 				};
 
-				var askForGuestPassword = function(previouslyFailed) {
+				var tokenReceived = function(token) {
+					postMessageAPI.requestResponse((new Date().getTime()) /* id */, {
+						type: "guestLogin",
+						guestLogin: token
+					}, function(event) {
+						var token = event.data;
+						if (!token.success) {
+							askForTemporaryPassword(true);
+							return;
+						}
+						doLogin({
+							useridcombo: token.useridcombo,
+							secret: token.secret
+						});
+					});
+				};
+
+				var askForTemporaryPassword = function(previouslyFailed) {
+					if (!previouslyFailed && ownCloud.dataStore.temporaryPassword) {
+						// Try to get tp from query params. Only done once, then prompt appears again
+						tokenReceived(ownCloud.dataStore.temporaryPassword);
+						return;
+					}
+
 					previouslyFailed = !!previouslyFailed;
 					alertify.dialog.prompt("Please enter a password to log in", function(token) {
-						postMessageAPI.requestResponse((new Date().getTime()) /* id */, {
-							type: "guestLogin",
-							guestLogin: token
-						}, function(event) {
-							var token = event.data;
-							if (!token.success) {
-								askForGuestPassword(true);
-								return;
-							}
-							doLogin({
-								useridcombo: token.useridcombo,
-								secret: token.secret
-							});
-						});
+						tokenReceived(token);
 					}, function() {
-						askForGuestPassword(true);
+						askForTemporaryPassword(true);
 					});
 				};
 
 				var setConfig = function(config) {
 					ownCloud.setConfig(config);
 
-					if (config.isGuest) {
-						guest.resolve(true);
+					if (typeof config.isGuest !== "undefined") {
+						guest.resolve(config.isGuest);
+					}
+					if (typeof config.temporaryPassword !== "undefined") {
+						ownCloud.dataStore.temporaryPassword = config.temporaryPassword;
+					}
+					if (typeof config.features.temporaryPassword !== "undefined") {
+						temporaryPassword.resolve(!!config.features.temporaryPassword);
 					}
 				};
 
@@ -267,9 +306,9 @@ define([
 								var modal = angular.element(".modal");
 								var scope = modal.find(".modal-header").scope().$parent;
 								scope.msg = "Could not authenticate. Please try again.";
-								if (isGuest) {
+								if (isGuest && isTemporaryPasswordFeatureEnabled) {
 									//scope.close();
-									askForGuestPassword(true);
+									askForTemporaryPassword(true);
 								} else {
 									modal.find("button").remove();
 								}
@@ -280,33 +319,21 @@ define([
 
 				var changeRoom = function(room) {
 					authorize.promise.then(function() {
-						currentRoom = room;
+						ownCloud.dataStore.currentRoom = room;
 						rooms.joinByName(room, true);
 					});
 				};
 
-				$rootScope.$on('$routeChangeSuccess', function(e, current, previous) {
-					var inform = function(newRoom) {
+				$rootScope.$on("room.updated", function(event, room) {
+					var update = function(newRoom) {
+						ownCloud.dataStore.currentRoom = newRoom;
 						postMessageAPI.post({
 							type: "roomChanged",
 							roomChanged: newRoom
 						});
 					};
 
-					if (!current || !current.params) {
-						inform("");
-						return;
-					}
-
-					var newRoom = decodeURIComponent(current.params.room);
-					var oldRoom = "";
-					if (previous) {
-						oldRoom = decodeURIComponent(previous.params.room);
-					}
-
-					if (newRoom !== oldRoom && newRoom !== currentRoom) {
-						inform(newRoom);
-					}
+					update(room.Name);
 				});
 
 				postMessageAPI.bind(function(event) {
@@ -367,41 +394,83 @@ define([
 				};
 			}]);
 
-			app.directive("roomBar", ["$window", "ownCloud", function($window, ownCloud) {
+			app.directive("roomBar", ["$window", "$timeout", "ownCloud", "alertify", function($window, $timeout, ownCloud, alertify) {
+				var open = function() {
+					/*var popup = $window.open(
+						ownCloud.getConfig().baseURL + "/admin/tp",
+						"Generate Temporary Password",
+						"height=460px,width=620px,location=no,menubar=no,status=no,titlebar=no,toolbar=no"
+					);*/
+					var iframe = ownCloud.openModalWithIframe(
+						"/admin/tp",
+						"Generate Temporary Password",
+						' ', // Has to be non-empty, otherwise default title is used
+						function() {},
+						function() {}
+					);
+					var postMessageApiTP = new PostMessageAPI({
+						allowedPartners: ALLOWED_PARTNERS,
+						iframe: iframe.get(0)
+					});
+					iframe.get(0).onbeforeunload = function() {
+						// Timeout to retrieve last-second postMessages
+						setTimeout(postMessageApiTP.unbindAll, 100);
+					};
+
+					var init = function() {
+						postMessageApiTP.post({
+							message: {
+								room: ownCloud.dataStore.currentRoom
+							},
+							type: "roomChanged"
+						});
+					};
+					postMessageApiTP.bind(function(event) {
+						switch (event.data.type) {
+						case "init":
+							init(event.data.message);
+							break;
+						default:
+							log("Got unsupported message type", event.data.type);
+						}
+					});
+				};
+				var addGenerateTemporaryPasswordButton = function(element) {
+					var $button = $('<a>')
+					.attr('title', 'Generate Temporary Password')
+					.addClass('btn btn-link btn-sm generate-temporary-password')
+					.html('<i class="fa fa-key fa-lg"></i>')
+					.on("click", open)
+					.prependTo(element.find('.socialshare'));
+				};
+
 				return {
 					scope: false,
 					restrict: "E",
 					link: function(scope, element) {
 						// Hide roombar
 						//element.hide();
-						var addGenerateTemporaryPasswordButton = function() {
-							var $button = $('<a>')
-							.attr('title', 'Generate Temporary Password')
-							.addClass('btn btn-link btn-sm generate-temporary-password')
-							.html('<i class="fa fa-key fa-lg"></i>')
-							.on("click", function() {
-								var popup = $window.open(
-									ownCloud.getConfig().baseURL + "/admin/tp",
-									"Generate Temporary Password",
-									"height=420px,width=620px,location=no,menubar=no,status=no,titlebar=no,toolbar=no"
-								);
-							})
-							.prependTo(element.find('.socialshare'));
-						};
 						ownCloud.deferreds.admin.promise.then(function() {
-							addGenerateTemporaryPasswordButton();
+							addGenerateTemporaryPasswordButton(element);
 						});
 					}
 				};
 			}]);
 
-			app.service('ownCloud', ["$window", "$http", "$q", function($window, $http, $q) {
+			app.service('ownCloud', ["$window", "$http", "$q", "$timeout", "alertify", function($window, $http, $q, $timeout, alertify) {
 
 				var deferreds = {
 					authorize: $q.defer(),
 					online: $q.defer(),
 					admin: $q.defer(),
-					guest: $q.defer()
+					guest: $q.defer(),
+					features: {
+						temporaryPassword: $q.defer()
+					}
+				};
+
+				var dataStore = {
+					currentRoom: ""
 				};
 
 				var config = {
@@ -446,6 +515,43 @@ define([
 					return defer.promise;
 				};
 
+				var openModalWithIframe = function(url, title, message, success_cb, error_cb) {
+					// TODO(leon): This is extremely ugly.
+					alertify.dialog.notify(
+						title,
+						message,
+						success_cb,
+						error_cb
+					);
+					var iframe = angular.element("<iframe>");
+					$timeout(function() {
+						var modal = angular.element(".modal");
+						modal.addClass("owncloud-iframe-modal");
+						iframe
+							.attr("src", config.baseURL + url)
+							.attr("frameborder", "0")
+							.attr("seamless", "seamless")
+							.hide();
+						var loader = angular.element("<div>")
+							.addClass("loader")
+							.css({
+								"background-image": "url('" + config.baseURL.replace("/index.php/apps/spreedme", "/core/img/loading-dark.gif") + "')"
+							});
+						iframe.get(0).onload = function() {
+							loader.remove();
+							iframe.show();
+						};
+
+						modal.find(".modal-footer")
+							.hide();
+						modal.find(".modal-body")
+							.append(loader)
+							.append(iframe);
+					}, 100);
+
+					return iframe;
+				};
+
 				var FileSelector = function(cb, config) {
 					this.cb = cb;
 					this.config = config;
@@ -459,17 +565,25 @@ define([
 					log.apply(log, args);
 				};
 				FileSelector.prototype.init = function() {
-					var popup = $window.open(
+					/*var popup = $window.open(
 						config.baseURL + "/file-selector",
 						"FileSelector",
 						"height=740px,width=770px,location=no,menubar=no,status=no,titlebar=no,toolbar=no"
+					);*/
+					var iframe = openModalWithIframe(
+						"/file-selector",
+						"Please select the file(s) you want to share",
+						' ', // Has to be non-empty, otherwise default title is used
+						function() {},
+						function() {}
 					);
+
 					this.postMessageAPI = new PostMessageAPI({
 						allowedPartners: ALLOWED_PARTNERS,
-						popup: popup
+						iframe: iframe.get(0)
 					});
 
-					popup.onbeforeunload = function() {
+					iframe.get(0).onbeforeunload = function() {
 						// Timeout to retrieve last-second postMessages
 						setTimeout(this.postMessageAPI.unbindAll, 100);
 					};
@@ -484,6 +598,9 @@ define([
 						case "filesSelected":
 							that.gotSelectedFiles(event.data.message);
 							return;
+						case "close":
+							angular.element(iframe).scope().close();
+							return;
 						default:
 							that.log("Got unsupported message type", event.data.type);
 						}
@@ -495,7 +612,8 @@ define([
 							title: "Please select the file(s) you want to share",
 							allowMultiSelect: true,
 							filterByMIME: this.config.allowedFileTypes,
-							withDetails: false // TODO(leon): Set this to true at some point..
+							withDetails: false, // TODO(leon): Set this to true at some point..
+							inIframe: true
 						},
 						type: "open"
 					});
@@ -533,7 +651,9 @@ define([
 					uploadFile: uploadFile,
 					downloadFile: downloadFile,
 					FileSelector: FileSelector,
-					deferreds: deferreds
+					deferreds: deferreds,
+					openModalWithIframe: openModalWithIframe,
+					dataStore: dataStore
 				};
 
 			}]);
@@ -689,11 +809,13 @@ define([
 							};
 							$(element).on('mouseenter', '.presentations .thumbnail.ng-scope', onmouseenter);
 
-							ownCloud.deferreds.guest.promise.then(function() {
-								// Remove some features for guests
-								element.find('.owncloud-start-import').remove();
-								$thumb.remove();
-								$(element).off('mouseenter', '.presentations .thumbnail.ng-scope', onmouseenter);
+							ownCloud.deferreds.guest.promise.then(function(guest) {
+								if (guest) {
+									// Remove some features for guests
+									element.find('.owncloud-start-import').remove();
+									$thumb.remove();
+									$(element).off('mouseenter', '.presentations .thumbnail.ng-scope', onmouseenter);
+								}
 							});
 						};
 					},

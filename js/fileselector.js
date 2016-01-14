@@ -13,16 +13,16 @@
 (function($, OC, OwnCloudConfig, PostMessageAPI) {
 $(document).ready(function() {
 
-	if (!window.opener) {
+	if (!window.parent) {
 		return;
 	}
 
-	var sharedConfig = $.parseJSON($("script[data-shared-config]").attr("data-shared-config"));
-	var ALLOWED_PARTNERS = sharedConfig.allowedPartners.split(",");
+	var sharedConfig = $.parseJSON($("#sharedconfig").html());
+	var ALLOWED_PARTNERS = sharedConfig.allowed_partners.split(",");
 
 	var postMessageAPI = new PostMessageAPI({
 		allowedPartners: ALLOWED_PARTNERS,
-		opener: window.opener
+		parent: window.parent
 	});
 
 	var open = function(config) {
@@ -89,14 +89,28 @@ $(document).ready(function() {
 			};
 		}
 
-		OC.dialogs.filepicker(config.title, function(selectedFiles) {
+		OC.dialogs.filepicker((config.inIframe ? "" : config.title), function(selectedFiles) {
 			selectedFiles = decorateSelectedFiles(selectedFiles);
 			postMessageAPI.post({
 				message: selectedFiles,
 				type: "filesSelected"
 			});
-			window.close();
+			if (!config.inIframe) {
+				window.close();
+			} else {
+				postMessageAPI.post({
+					message: "",
+					type: "close"
+				});
+			}
 		}, config.allowMultiSelect, config.filterByMIME, null, config.withDetails);
+
+		setTimeout(function() {
+			if (config.inIframe) {
+				$(".oc-dialog")
+					.addClass("in-iframe");
+			}
+		}, 100);
 	};
 
 	postMessageAPI.bind(function(event) {

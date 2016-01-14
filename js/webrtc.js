@@ -15,8 +15,9 @@ $(document).ready(function() {
 
 	var iframe = $("#container iframe").get(0);
 
-	var sharedConfig = $.parseJSON($("script[data-shared-config]").attr("data-shared-config"));
-	var IS_GUEST = sharedConfig.isGuest;
+	var sharedConfig = $.parseJSON($("#sharedconfig").html());
+	var IS_GUEST = sharedConfig.is_guest;
+	var IS_TEMPORARY_PASSWORD_FEATURE_ENABLED = sharedConfig.features.temporary_password;
 	var ALLOWED_PARTNERS = (function() {
 		var parser = document.createElement("a");
 		parser.href = iframe.src;
@@ -45,6 +46,18 @@ $(document).ready(function() {
 		}
 	})();
 
+	var getQueryParam = function(param) {
+		var query = window.parent.location.search.substring(1);
+		var vars = query.split("&");
+		for (var i = 0; i < vars.length; i++) {
+			var pair = vars[i].split("=");
+			if (pair[0] === param) {
+				return window.decodeURIComponent(pair[1]);
+			}
+		}
+		return false;
+	}
+
 	var postMessageAPI = new PostMessageAPI({
 		allowedPartners: ALLOWED_PARTNERS,
 		iframe: iframe
@@ -57,7 +70,11 @@ $(document).ready(function() {
 			config: {
 				// Use own origin, as this is possibly used by a different context
 				baseURL: host + OC.generateUrl("/apps/spreedme"),
-				isGuest: IS_GUEST
+				isGuest: IS_GUEST,
+				temporaryPassword: getQueryParam("tp"),
+				features: {
+					temporaryPassword: IS_TEMPORARY_PASSWORD_FEATURE_ENABLED
+				}
 			},
 			type: "config"
 		});
