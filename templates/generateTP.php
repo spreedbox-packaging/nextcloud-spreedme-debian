@@ -26,7 +26,7 @@ $sharedConfig = array(
 		</ol>
 		<p><b>Please note</b>: Once you published a TP (to a friend, ..) it can't be invalidated, until expiration date has passed. So carefully set the expiration date.<br /><br /></p>
 	</div>
-	<div id="tp">
+	<div id="tp" class="hidden">
 		<div id="error" class="hidden">
 			<p><b>Error!</b></p>
 			<p id="errorcode"></p>
@@ -47,8 +47,8 @@ $sharedConfig = array(
 		<input type="text" id="userid" name="userid" placeholder="John Doe" value="" />
 	</p>
 	<p>
-		<label for="userid">Expiration:</label>
+		<label for="expiration">Expiration:</label>
 		<input type="text" id="expiration" name="expiration" value="" />
 	</p>
-	<input type="submit" value="Generate" />
+	<button type="submit" class="primary">Generate</button>
 </form>

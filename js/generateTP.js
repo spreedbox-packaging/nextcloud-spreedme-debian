@@ -5,7 +5,7 @@
  * later. See the COPYING file.
  *
  * @author Leon <leon@struktur.de>
- * @copyright Leon 2015
+ * @copyright Leon 2016
  */
 
 // This file is loaded in ownCloud context
@@ -13,7 +13,9 @@
 (function($, OC) {
 $(document).ready(function() {
 
-	if (window.parent) {
+	if (window.parent !== window) {
+		$("body").addClass("in-iframe");
+
 		var sharedConfig = $.parseJSON($("#sharedconfig").html());
 		var ALLOWED_PARTNERS = sharedConfig.allowed_partners.split(",");
 
@@ -30,7 +32,7 @@ $(document).ready(function() {
 	};
 	var requestTP = function(userid, expiration, cb_success, cb_error) {
 		if (userid.length < 1) {
-			alert("Please enter a valid username to invite");
+			alert("Please enter a valid name to invite");
 			return;
 		}
 		if (expiration.length < 1 || expiration < 1 || parseInt(expiration, 10) != expiration) {
@@ -38,7 +40,7 @@ $(document).ready(function() {
 			return;
 		}
 		if (expiration > (new Date().getTime() / 1000) + (60 * 60 * 24)) {
-			var response = confirm("Do you really want to generate a Temporary Passwords which is valid for more than 1 day?");
+			var response = confirm("Do you really want to generate a Temporary Password which is valid for more than 1 day?");
 			if (!response) {
 				return;
 			}
@@ -65,7 +67,7 @@ $(document).ready(function() {
 
 	var useridField = $("form input[name=userid]");
 	var expirationField = $("form input[name=expiration]");
-	$("form input[type=submit]").click(function(e) {
+	$("form").submit(function(e) {
 		e.preventDefault();
 
 		requestTP(useridField.val(), Math.round(new Date(expirationField.datetimepicker("getDate")).getTime() / 1000), function(tp) {
