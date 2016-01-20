@@ -1,3 +1,26 @@
+owncloud-spreedme (0.1.2-1) trusty; urgency=low
+
+  [ Leon Klingele ]
+  * Fix wording: 'username' -> 'name'
+  * Fix spinner icon having uneven edges (FS#3226)
+  * Temporary Password: Fix datepicker not being completely visible (FS#3228)
+  * Fix typo
+  * Temporary Password: Fix label for attribute
+  * Temporary Password: Fix compatibility with OC 8.1.5
+  * Whoops. It's already 2016. This comes a bit late
+  * Add example nginx configuration
+  * Fix datepicker's prev/next month button hover position
+  * Temporary Password: Use button.primary instead of input[type=submit]
+  * Add versioned urls to header assets
+  * New TODOs
+  * Fix typo in changelog
+  * 0.1.2
+
+  [ Joachim Bauch ]
+  * Also install example configuration.
+
+ -- Joachim Bauch <bauch@struktur.de>  Wed, 20 Jan 2016 13:56:55 +0100
+
 owncloud-spreedme (0.1.1-2) trusty; urgency=low
 
   * Output something about running occ upgrade.
