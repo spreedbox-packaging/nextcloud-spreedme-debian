@@ -5,7 +5,7 @@
  * later. See the COPYING file.
  *
  * @author Leon <leon@struktur.de>
- * @copyright Leon 2016
+ * @copyright struktur AG 2016
  */
 
 // This file is loaded in WebRTC context
@@ -266,25 +266,29 @@ define([
 				};
 
 				var setUsername = function(displayName) {
-					var userSettings = getUserSettings();
-					if (true || userSettings.displayName !== displayName) {
-						// Update
-						appData.get().user.displayName = displayName;
-						userSettings.displayName = displayName;
-						userSettingsData.save(userSettings);
-						saveSettings();
-					}
+					authorize.promise.then(function() {
+						var userSettings = getUserSettings();
+						if (true || userSettings.displayName !== displayName) {
+							// Update
+							appData.get().user.displayName = displayName;
+							userSettings.displayName = displayName;
+							userSettingsData.save(userSettings);
+							saveSettings();
+						}
+					});
 				};
 
 				var setBuddyPicture = function(buddyPicture) {
-					var userSettings = getUserSettings();
-					if (true || userSettings.buddyPicture !== buddyPicture) {
-						// Update
-						appData.get().user.buddyPicture = buddyPicture;
-						userSettings.buddyPicture = buddyPicture;
-						userSettingsData.save(userSettings);
-						saveSettings();
-					}
+					authorize.promise.then(function() {
+						var userSettings = getUserSettings();
+						if (true || userSettings.buddyPicture !== buddyPicture) {
+							// Update
+							appData.get().user.buddyPicture = buddyPicture;
+							userSettings.buddyPicture = buddyPicture;
+							userSettingsData.save(userSettings);
+							saveSettings();
+						}
+					});
 				};
 
 				var doLogin = function(login) {
@@ -349,24 +353,15 @@ define([
 						break;
 					case "userConfig":
 						var config = message;
-						// TODO(leon): This is only a temporary workaround
-						authorize.promise.then(function() {
-							setUserConfig(config);
-						});
+						setUserConfig(config);
 						break;
 					case "userBuddyPicture":
 						var buddyPicture = message;
-						// TODO(leon): This is only a temporary workaround
-						authorize.promise.then(function() {
-							setBuddyPicture(buddyPicture);
-						});
+						setBuddyPicture(buddyPicture);
 						break;
 					case "guestConfig":
 						var config = message;
-						// TODO(leon): This is only a temporary workaround
-						authorize.promise.then(function() {
-							setGuestConfig(config);
-						});
+						setGuestConfig(config);
 						break;
 					case "changeRoom":
 						var room = message;
