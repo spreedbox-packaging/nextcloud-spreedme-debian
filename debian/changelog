@@ -1,3 +1,9 @@
+owncloud-spreedme (0.1.3-2) trusty; urgency=low
+
+  * Run "occ upgrade" from postinst for automatic updates (FS#3326).
+
+ -- Joachim Bauch <bauch@struktur.de>  Tue, 09 Feb 2016 09:42:38 +0100
+
 owncloud-spreedme (0.1.3-1) trusty; urgency=low
 
   [ Leon Klingele ]
