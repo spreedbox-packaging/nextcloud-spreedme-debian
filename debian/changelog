@@ -1,4 +1,10 @@
-owncloud-spreedme (0.1.3-4) tusty; urgency=low
+owncloud-spreedme (0.1.3-5) trusty; urgency=low
+
+  * Fixed wrong distribution name.
+
+ -- Joachim Bauch <bauch@struktur.de>  Tue, 09 Feb 2016 13:58:09 +0100
+
+owncloud-spreedme (0.1.3-4) trusty; urgency=low
 
   * Only run upgrade if config.php is not empty.
 
