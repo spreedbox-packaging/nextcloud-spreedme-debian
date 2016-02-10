@@ -1,4 +1,6 @@
 tar-ignore
+tar-ignore = ".pc"
+tar-ignore = ".pc/*"
 tar-ignore = "build/artifacts"
 tar-ignore = "build/artifacts/*"
 tar-ignore = "js/node_modules"
