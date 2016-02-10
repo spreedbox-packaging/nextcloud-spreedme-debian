@@ -6,5 +6,5 @@
      <author>struktur AG</author>
 +    <default_enable/>
      <documentation>
-         <user>../README.md</user>
-         <admin>../README.md</admin>
+         <user>https://github.com/strukturag/owncloud-spreedme/blob/master/README.md</user>
+         <admin>https://github.com/strukturag/owncloud-spreedme/blob/master/README.md</admin>
