@@ -33,7 +33,7 @@
 +			// Append new port (but only if it isn't the default port for the current protocol).
 +			$is_http = ($protocol === 'http');
 +			$is_https = ($protocol === 'https');
-+			if (($is_http && $port !== '80') || (!$is_https && $port !== '443')) {
++			if (($is_http && $port !== '80') || ($is_https && $port !== '443')) {
 +				$hostname = $hostname . ':' . $port;
 +			}
  		}
