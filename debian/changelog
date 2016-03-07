@@ -1,3 +1,28 @@
+owncloud-spreedme (0.1.4-1) trusty; urgency=low
+
+  [ Joachim Bauch ]
+  * Added Gitlab CI integration.
+
+  [ Leon Klingele ]
+  * Remove redundant unit tests
+  * Add dummy unit test
+
+  [ Joachim Bauch ]
+  * Use ownCloud request API to determine current hostname and protocol.
+
+  [ Leon Klingele ]
+  * PostMessageAPI: Use Function.prototype.bind instead of that :)
+  * External users should have an unique userid
+  * Include version number in TP to automatically invalidate it after a version increase
+  * Properly set guest display name
+  * Combo from TP should be valid for the default max age, not for the TP validity
+  * 0.1.4
+
+  [ Joachim Bauch ]
+  * Removed patch "use_owncloud_host_api", now part of upstream.
+
+ -- Joachim Bauch <bauch@struktur.de>  Mon, 07 Mar 2016 16:48:57 +0100
+
 owncloud-spreedme (0.1.3-7) trusty; urgency=low
 
   * Added license text.
