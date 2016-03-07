@@ -1,3 +1,2 @@
 autoloader_allow_config_root.patch
 default_enable.patch
-use_owncloud_host_api.patch
