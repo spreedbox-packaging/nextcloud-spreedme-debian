@@ -1,3 +1,9 @@
+owncloud-spreedme (0.1.4-2) trusty; urgency=low
+
+  * Don't log something about "occ upgrade" if owncloud is not setup yet (FS#3484).
+
+ -- Joachim Bauch <bauch@struktur.de>  Wed, 16 Mar 2016 09:37:47 +0100
+
 owncloud-spreedme (0.1.4-1) trusty; urgency=low
 
   [ Joachim Bauch ]
