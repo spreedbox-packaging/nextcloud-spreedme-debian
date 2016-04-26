@@ -1,3 +1,10 @@
+owncloud-spreedme (0.1.4-3) trusty; urgency=low
+
+  [ Leon Klingele ]
+  * Spreed.ME should always be enabled, i.e. you can't disable it
+
+ -- Joachim Bauch <bauch@struktur.de>  Tue, 26 Apr 2016 13:30:30 +0200
+
 owncloud-spreedme (0.1.4-2) trusty; urgency=low
 
   * Don't log something about "occ upgrade" if owncloud is not setup yet (FS#3484).
