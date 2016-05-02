@@ -88,16 +88,15 @@ class ApiController extends Controller {
 	}
 
 	/**
+	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function generateTemporaryPassword() {
-		$userid = isset($_POST['userid']) ? $_POST['userid'] : null;
-		$expiration = isset($_POST['expiration']) ? $_POST['expiration'] : null;
-
+	public function generateTemporaryPassword($userid, $expiration) {
 		$_response = array('success' => false);
-		if ($userid !== null && $expiration !== null) {
+		// TODO(leon): Move this to user.php
+		if ($this->user->isSpreedMeAdmin() && $userid !== null && $expiration !== null) {
 			try {
-				$_response['tp'] = Security::generateTemporaryPassword($userid, $expiration);
+				$_response['tp'] = base64_encode(Security::generateTemporaryPassword($userid, $expiration));
 				$_response['success'] = true;
 			} catch (\Exception $e) {
 				$_response['error'] = $e->getCode();
@@ -112,11 +111,15 @@ class ApiController extends Controller {
 	 * @NoCSRFRequired
 	 * @PublicPage
 	 */
-	public function getTokenWithTemporaryPassword() {
-		$tp = isset($_POST['tp']) ? $_POST['tp'] : null;
+	public function getTokenWithTemporaryPassword($tp) {
+		$tmp = base64_decode($tp, true);
+		// We support both base64 encoded and unencoded TPs
+		if ($tmp !== false) {
+			$tp = $tmp;
+		}
 
 		$_response = array('success' => false);
-		if ($tp !== null) {
+		if ($tp) {
 			try {
 				$token = Security::getSignedComboFromTemporaryPassword($tp);
 				$_response = array_merge($_response, $token);

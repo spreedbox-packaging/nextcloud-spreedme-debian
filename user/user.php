@@ -38,6 +38,7 @@ class User {
 			'id' => $this->getUserId(),
 			'display_name' => $this->getDisplayName(),
 			'is_admin' => $this->isAdmin(),
+			'is_spreedme_admin' => $this->isSpreedMeAdmin(),
 		);
 	}
 
@@ -53,11 +54,49 @@ class User {
 		return $this->user->getDisplayName();
 	}
 
-	private function isAdmin() {
+	private function getGroups() {
 		$this->requireLogin();
-		$groups = \OC_Group::getUserGroups($this->userId);
+
+		// TODO(leon): This looks like a private API.
+		return \OC_Group::getUserGroups($this->userId);
+	}
+
+	private function getAdministeredGroups() {
+		$this->requireLogin();
+
+		// TODO(leon): This looks like a private API.
+		if (class_exists('\OC_SubAdmin', true)) {
+			return \OC_SubAdmin::getSubAdminsGroups($this->userId);
+		}
+		// ownCloud 9
+		$subadmin = new \OC\SubAdmin(
+			\OC::$server->getUserManager(),
+			\OC::$server->getGroupManager(),
+			\OC::$server->getDatabaseConnection()
+		);
+		$user = \OC::$server->getUserSession()->getUser();
+		$ocgroups = $subadmin->getSubAdminsGroups($user);
+		$groups = array();
+		foreach ($ocgroups as $ocgroup) {
+			$groups[] = $ocgroup->getGID();
+		}
+		return $groups;
+	}
+
+	private function isAdmin() {
+		$groups = $this->getGroups();
 
 		return in_array('admin', $groups, true);
+	}
+
+	private function isSpreedMeGroupAdmin() {
+		$groups = $this->getAdministeredGroups();
+
+		return in_array('Spreed.ME', $groups, true);
+	}
+
+	public function isSpreedMeAdmin() {
+		return $this->isAdmin() || $this->isSpreedMeGroupAdmin();
 	}
 
 	public function getSignedCombo() {

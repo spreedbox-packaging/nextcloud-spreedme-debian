@@ -175,6 +175,7 @@ define([
 				});
 				guest.promise.then(function(guest) {
 					isGuest = guest;
+					angular.element("body").addClass((guest ? "is-guest" : "is-no-guest"));
 				});
 				temporaryPassword.promise.then(function(enabled) {
 					isTemporaryPasswordFeatureEnabled = enabled;
@@ -212,7 +213,7 @@ define([
 					}, function(event) {
 						var token = event.data;
 						if (!token.success) {
-							askForTemporaryPassword(true);
+							askForTemporaryPassword();
 							return;
 						}
 						doLogin({
@@ -222,20 +223,32 @@ define([
 					});
 				};
 
-				var askForTemporaryPassword = function(previouslyFailed) {
-					if (!previouslyFailed && ownCloud.dataStore.temporaryPassword) {
-						// Try to get tp from query params. Only done once, then prompt appears again
-						tokenReceived(ownCloud.dataStore.temporaryPassword);
-						return;
-					}
-
-					previouslyFailed = !!previouslyFailed;
-					alertify.dialog.prompt("Please enter a password to log in", function(token) {
-						tokenReceived(token);
-					}, function() {
-						askForTemporaryPassword(true);
-					});
-				};
+				var askForTemporaryPassword = (function() {
+					var alreadyAsked = false;
+					return function() {
+						if (!alreadyAsked && ownCloud.dataStore.temporaryPassword) {
+							// Try to get tp from query params. Only done once, then prompt appears again
+							tokenReceived(ownCloud.dataStore.temporaryPassword);
+						} else {
+							alertify.dialog.prompt("Please enter a password to log in", function(token) {
+								tokenReceived(token);
+							}, function() {
+								askForTemporaryPassword();
+							});
+							// TODO(leon): There is no better way?
+							$timeout(function() {
+								var modal = angular.element(".modal");
+								modal.find(".modal-footer button[ng-click='cancel()']")
+									.css('float', 'left')
+									.text('Go to ownCloud')
+									.click(function() {
+										redirectToOwncloud();
+									});
+							}, 100);
+						}
+						alreadyAsked = true;
+					};
+				})();
 
 				var setConfig = function(config) {
 					ownCloud.setConfig(config);
@@ -260,7 +273,7 @@ define([
 				var setUserConfig = function(config) {
 					setUsername(config.display_name);
 
-					if (config.is_admin) {
+					if (config.is_spreedme_admin) {
 						admin.resolve(true);
 					}
 				};
@@ -268,7 +281,7 @@ define([
 				var setUsername = function(displayName) {
 					authorize.promise.then(function() {
 						var userSettings = getUserSettings();
-						if (true || userSettings.displayName !== displayName) {
+						if (userSettings.displayName !== displayName) {
 							// Update
 							appData.get().user.displayName = displayName;
 							userSettings.displayName = displayName;
@@ -281,7 +294,7 @@ define([
 				var setBuddyPicture = function(buddyPicture) {
 					authorize.promise.then(function() {
 						var userSettings = getUserSettings();
-						if (true || userSettings.buddyPicture !== buddyPicture) {
+						if (userSettings.buddyPicture !== buddyPicture) {
 							// Update
 							appData.get().user.buddyPicture = buddyPicture;
 							userSettings.buddyPicture = buddyPicture;
@@ -309,6 +322,7 @@ define([
 									});
 								});
 							}
+
 							log("Retrieved nonce - authenticating as user:", data.userid);
 							mediaStream.api.requestAuthentication(data.userid, data.nonce);
 							delete data.nonce;
@@ -320,7 +334,7 @@ define([
 								scope.msg = "Could not authenticate. Please try again.";
 								if (isGuest && isTemporaryPasswordFeatureEnabled) {
 									//scope.close();
-									askForTemporaryPassword(true);
+									askForTemporaryPassword();
 								} else {
 									modal.find("button").remove();
 								}
