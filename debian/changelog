@@ -1,3 +1,27 @@
+owncloud-spreedme (0.1.6-1) trusty; urgency=low
+
+  [ Leon Klingele ]
+  * Base64 encode TPs, accept both encoded and unencoded TPs. Implements #10
+  * Only update display name / buddy picture if they have changed
+  * Don't use global POST variable
+
+  [ Joachim Bauch ]
+  * Don't setup hardcoded APT cache, done through environment variables by runner.
+
+  [ Leon Klingele ]
+  * Use closure for askForTemporaryPassword
+  * Hide 'Cancel' button from TP form
+  * Only show action bar to logged in users
+  * Show 'Go to ownCloud' button in TP window for guests
+  * Revert "Remove Spreed.ME logo in top left header bar"
+  * Show Spreed.ME logo in header bar for guests
+  * Allow non-ownCloud admins to generate 'Temporary Passwords' if they are admin for a 'Spreed.ME' group
+  * 0.1.5
+  * SubAdmin fix for ownCloud 9
+  * 0.1.6
+
+ -- Joachim Bauch <bauch@struktur.de>  Mon, 02 May 2016 09:16:43 +0200
+
 owncloud-spreedme (0.1.4-3) trusty; urgency=low
 
   [ Leon Klingele ]
