@@ -10,11 +10,19 @@ invoke() {
     fi
 }
 
+mark_shipped() {
+    if [ -x "/usr/share/spreedbox-owncloud/spreedbox-mark-shipped" ]; then
+        /usr/share/spreedbox-owncloud/spreedbox-mark-shipped spreedme
+    else
+        sed -i 's|"shippedApps": \[$|"shippedApps": \["spreedme",|;' /usr/lib/owncloud/www/core/shipped.json
+        sed -i 's|"alwaysEnabled": \[$|"alwaysEnabled": \["spreedme",|;' /usr/lib/owncloud/www/core/shipped.json
+    fi
+}
+
 case "$1" in
     configure)
         if [ -e "/usr/lib/owncloud/www/core/shipped.json" ]; then
-            sed -i 's|"shippedApps": \[$|"shippedApps": \["spreedme",|;' /usr/lib/owncloud/www/core/shipped.json
-            sed -i 's|"alwaysEnabled": \[$|"alwaysEnabled": \["spreedme",|;' /usr/lib/owncloud/www/core/shipped.json
+            mark_shipped
         fi
         if [ -e "/etc/init.d/spreed-webrtc" ]; then
             invoke spreed-webrtc restart || true
@@ -46,8 +54,7 @@ case "$1" in
 
     triggered)
         if [ -e "/usr/lib/owncloud/www/core/shipped.json" ]; then
-            sed -i 's|"shippedApps": \[$|"shippedApps": \["spreedme",|;' /usr/lib/owncloud/www/core/shipped.json
-            sed -i 's|"alwaysEnabled": \[$|"alwaysEnabled": \["spreedme",|;' /usr/lib/owncloud/www/core/shipped.json
+            mark_shipped
         fi
         if [ -e "/etc/init.d/php5-fpm" ]; then
             invoke php5-fpm restart || true
