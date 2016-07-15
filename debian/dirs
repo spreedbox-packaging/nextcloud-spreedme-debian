@@ -1,3 +1,4 @@
-etc/spreedme/owncloud
-usr/lib/owncloud/www/apps/spreedme/config
-usr/lib/owncloud/www/apps/spreedme/extra/static/config
+etc/spreedme/nextcloud
+usr/lib/nextcloud/www/apps/spreedme/config
+usr/share/nextcloud-spreedme/extra/static/config
+

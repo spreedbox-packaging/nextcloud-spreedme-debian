@@ -23,10 +23,15 @@ override_dh_auto_build:
 override_dh_auto_install:
 	dh_auto_install
 
-	# Configuration for Owncloud application
-	cp config/config.php.in debian/owncloud-spreedme/etc/spreedme/owncloud/config.php
-	ln -s /etc/spreedme/owncloud/config.php debian/owncloud-spreedme/usr/lib/owncloud/www/apps/spreedme/config
+	# Configuration for Nextcloud application
+	cp config/config.php.in debian/nextcloud-spreedme/etc/spreedme/nextcloud/config.php
+	ln -s /etc/spreedme/nextcloud/config.php debian/nextcloud-spreedme/usr/lib/nextcloud/www/apps/spreedme/config
 
 	# Configuration for spreed-webrtc plugin
-	mv extra/static/config/OwnCloudConfig.js.in debian/owncloud-spreedme/etc/spreedme/owncloud/OwnCloudConfig.js
-	ln -s /etc/spreedme/owncloud/OwnCloudConfig.js debian/owncloud-spreedme/usr/lib/owncloud/www/apps/spreedme/extra/static/config/OwnCloudConfig.js
+	cp extra/static/config/OwnCloudConfig.js.in debian/nextcloud-spreedme/etc/spreedme/nextcloud/OwnCloudConfig.js
+	ln -s /etc/spreedme/nextcloud/OwnCloudConfig.js debian/nextcloud-spreedme/usr/share/nextcloud-spreedme/extra/static/config/OwnCloudConfig.js
+	ln -s /usr/share/nextcloud/spreedme/extra debian/nextcloud-spreedme/usr/lib/nextcloud/www/apps/spreedme/
+
+	# Load spreed-webrtc plugin via extra.d
+	mkdir -p debian/nextcloud-spreedme/usr/share/spreed-webrtc-server/extra.d
+	ln -s /usr/share/nextcloud-spreedme/extra debian/nextcloud-spreedme/usr/share/spreed-webrtc-server/extra.d/010-nextcloud-spreedme

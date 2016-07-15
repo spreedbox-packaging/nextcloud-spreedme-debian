@@ -1,26 +1,27 @@
-Source: owncloud-spreedme
+Source: nextcloud-spreedme
 Section: web
-Priority: extra
+Priority: optional
 Maintainer: struktur AG <opensource@struktur.de>
 Uploaders:
- Joachim Bauch <bauch@struktur.de>
+ Joachim Bauch <bauch@struktur.de>,
+ Simon Eisenmann <simon@struktur.de>
 Build-Depends:
  debhelper (>= 9),
  quilt
 Standards-Version: 3.9.5
 
-Package: owncloud-spreedme
+Package: nextcloud-spreedme
 Architecture: all
 Depends:
  ${misc:Depends}
 Provides:
- owncloud-spreedme-app,
- owncloud-spreedme-plugin
+ nextcloud-spreedme-app,
+ nextcloud-spreedme-plugin
 Replaces:
- owncloud-spreedme-app,
- owncloud-spreedme-plugin
+ nextcloud-spreedme-app,
+ nextcloud-spreedme-plugin
 Conflicts:
- owncloud-spreedme-app,
- owncloud-spreedme-plugin
-Description: Owncloud app to embedd spreed-webrtc
- This package installs the Owncloud app to embedd spreed-webrtc.
+ nextcloud-spreedme-app,
+ nextcloud-spreedme-plugin
+Description: Nextcloud app to embedd spreed-webrtc
+ This package installs the Nextcloud app to embedd spreed-webrtc.

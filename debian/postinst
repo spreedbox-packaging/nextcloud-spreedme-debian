@@ -2,6 +2,8 @@
 
 export PATH=$PATH:/sbin:/usr/sbin:/bin:/usr/bin
 
+export OCC=/usr/bin/occ.nextcloud
+
 invoke() {
     if [ -x /usr/sbin/invoke-rc.d ]; then
         invoke-rc.d $1 $2
@@ -11,49 +13,49 @@ invoke() {
 }
 
 mark_shipped() {
-    if [ -x "/usr/share/spreedbox-owncloud/spreedbox-mark-shipped" ]; then
-        /usr/share/spreedbox-owncloud/spreedbox-mark-shipped spreedme
+    if [ -x "/usr/share/spreedbox-nextcloud/spreedbox-mark-shipped" ]; then
+        /usr/share/spreedbox-nextcloud/spreedbox-mark-shipped spreedme
     else
-        sed -i 's|"shippedApps": \[$|"shippedApps": \["spreedme",|;' /usr/lib/owncloud/www/core/shipped.json
-        sed -i 's|"alwaysEnabled": \[$|"alwaysEnabled": \["spreedme",|;' /usr/lib/owncloud/www/core/shipped.json
+        sed -i 's|"shippedApps": \[$|"shippedApps": \["spreedme",|;' /usr/lib/nextcloud/www/core/shipped.json
+        sed -i 's|"alwaysEnabled": \[$|"alwaysEnabled": \["spreedme",|;' /usr/lib/nextcloud/www/core/shipped.json
     fi
 }
 
 case "$1" in
     configure)
-        if [ -e "/usr/lib/owncloud/www/core/shipped.json" ]; then
+        if [ -e "/usr/lib/nextcloud/www/core/shipped.json" ]; then
             mark_shipped
         fi
         if [ -e "/etc/init.d/spreed-webrtc" ]; then
-            invoke spreed-webrtc restart || true
+            dpkg-trigger --no-await spreed-webrtc
         fi
         if [ -e "/etc/init.d/php5-fpm" ]; then
             invoke php5-fpm restart || true
         fi
-        if [ -s "/etc/owncloud/config.php" ]; then
-            if [ -x "/usr/bin/occ" ]; then
+        if [ -s "/etc/nextcloud/config.php" ]; then
+            if [ -x "$OCC" ]; then
                 set +e
-                /usr/bin/occ upgrade
+                $OCC upgrade
                 rc=$?
                 set -e
                 if [ "$rc" != "0" ] && [ "$rc" != "3" ]; then
                     echo "****************************************************************"
-                    echo "** Automatic update failed, please run 'occ upgrade' manually **"
+                    echo "** Automatic update failed, please run 'occ.nextcloud upgrade' manually **"
                     echo "** after the installation to finish upgrading the spreedme    **"
-                    echo "** ownCloud application!                                      **"
+                    echo "** Nextcloud application!                                     **"
                     echo "****************************************************************"
                 fi
             else
                 echo "***************************************************************"
-                echo "** Please run 'occ upgrade' after the installation to finish **"
-                echo "** upgrading the spreedme ownCloud application!              **"
+                echo "** Please run 'occ.nextcloud upgrade' after the installation to finish **"
+                echo "** upgrading the spreedme Nextcloud application!             **"
                 echo "***************************************************************"
             fi
         fi
         ;;
 
     triggered)
-        if [ -e "/usr/lib/owncloud/www/core/shipped.json" ]; then
+        if [ -e "/usr/lib/nextcloud/www/core/shipped.json" ]; then
             mark_shipped
         fi
         if [ -e "/etc/init.d/php5-fpm" ]; then

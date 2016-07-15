@@ -4,7 +4,7 @@
  	public function __construct($appName, IRequest $request, $userId) {
  		parent::__construct($appName, $request);
  
-+		\OC::$loader->addValidRoot("/etc/spreedme/owncloud");
++		\OC::$loader->addValidRoot("/etc/spreedme/nextcloud");
 +
  		Helper::notifyIfAppNotSetUp();
  
@@ -15,7 +15,7 @@
  use OCA\SpreedME\Settings\Settings;
  use OCP\AppFramework\App;
  
-+\OC::$loader->addValidRoot("/etc/spreedme/owncloud");
++\OC::$loader->addValidRoot("/etc/spreedme/nextcloud");
 +
  $app = new App(Settings::APP_ID);
  $container = $app->getContainer();
@@ -26,7 +26,7 @@
  	public function __construct($appName, IRequest $request, $userId, IURLGenerator $urlGenerator) {
  		parent::__construct($appName, $request);
  
-+		\OC::$loader->addValidRoot("/etc/spreedme/owncloud");
++		\OC::$loader->addValidRoot("/etc/spreedme/nextcloud");
 +
  		if (!empty($userId)) {
  			$this->user = new User($userId);
