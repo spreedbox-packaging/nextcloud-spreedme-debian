@@ -1,3 +1,9 @@
+nextcloud-spreedme (0.2.0~git20161715.0.407a8eb-2) trusty; urgency=medium
+
+  * Fix extra symlink path
+
+ -- Simon Eisenmann <simon@struktur.de>  Mon, 18 Jul 2016 09:48:50 +0200
+
 nextcloud-spreedme (0.2.0~git20161715.0.407a8eb-1) trusty; urgency=medium
 
   [ Robin Appelman ]
