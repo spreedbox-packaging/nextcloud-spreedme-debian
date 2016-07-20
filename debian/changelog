@@ -1,3 +1,10 @@
+nextcloud-spreedme (0.2.0~git20161720.0.2640b57-1) trusty; urgency=medium
+
+  [ Jan-Christoph Borchardt ]
+  * Fix app icon to fit in the app dropdown style
+
+ -- Simon Eisenmann <simon@struktur.de>  Wed, 20 Jul 2016 14:34:33 +0200
+
 nextcloud-spreedme (0.2.0~git20161715.0.407a8eb-2) trusty; urgency=medium
 
   * Fix extra symlink path
