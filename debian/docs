@@ -1,5 +1,6 @@
 doc/API.txt
-doc/example-config-nginx.txt
+doc/example-config-apache.md
+doc/example-config-nginx.md
 AUTHORS.md
 CHANGELOG.md
 README.md
