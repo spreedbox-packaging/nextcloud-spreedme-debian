@@ -17,11 +17,9 @@ override_dh_auto_install:
 	dh_auto_install
 
 	# Configuration for Nextcloud application
-	cp config/config.php.in debian/nextcloud-spreedme/etc/spreedme/nextcloud/config.php
 	ln -s /etc/spreedme/nextcloud/config.php debian/nextcloud-spreedme/usr/lib/nextcloud/www/apps/spreedme/config
 
 	# Configuration for spreed-webrtc plugin
-	cp extra/static/config/OwnCloudConfig.js.in debian/nextcloud-spreedme/etc/spreedme/nextcloud/OwnCloudConfig.js
 	ln -s /etc/spreedme/nextcloud/OwnCloudConfig.js debian/nextcloud-spreedme/usr/share/nextcloud-spreedme/extra/static/config/OwnCloudConfig.js
 	ln -s /usr/share/nextcloud-spreedme/extra debian/nextcloud-spreedme/usr/lib/nextcloud/www/apps/spreedme/extra
 

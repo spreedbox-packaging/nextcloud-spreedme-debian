@@ -1,5 +1,6 @@
 appinfo/*	usr/lib/nextcloud/www/apps/spreedme/appinfo
 changelog/*	usr/lib/nextcloud/www/apps/spreedme/changelog
+config/* usr/share/nextcloud-spreedme/config
 controller/*	usr/lib/nextcloud/www/apps/spreedme/controller
 css/*	usr/lib/nextcloud/www/apps/spreedme/css
 debug/*	usr/lib/nextcloud/www/apps/spreedme/debug

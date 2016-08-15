@@ -23,6 +23,8 @@ mark_shipped() {
 
 case "$1" in
     configure)
+        cp --no-clobber "/usr/share/nextcloud-spreedme/config/config.php.in" "/etc/spreedme/nextcloud/config.php"
+        cp --no-clobber "/usr/share/nextcloud-spreedme/extra/static/config/OwnCloudConfig.js.in" "/etc/spreedme/nextcloud/OwnCloudConfig.js"
         if [ -e "/usr/lib/nextcloud/www/core/shipped.json" ]; then
             mark_shipped
         fi
