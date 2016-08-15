@@ -1,0 +1,3 @@
+version=2
+opts=filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/nextcloud-spreedme-$1\.tar\.gz/ \
+  https://github.com/strukturag/nextcloud-spreedme/tags .*/v?(\d\S*)\.tar\.gz
