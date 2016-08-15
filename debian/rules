@@ -8,7 +8,7 @@ export DH_OPTIONS
 export QUILT_PATCHES=debian/patches
 
 %:
-	dh $@
+	dh $@ --parallel
 
 override_dh_auto_build:
 	# no building required
