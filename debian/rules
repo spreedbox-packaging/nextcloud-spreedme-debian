@@ -10,15 +10,8 @@ export QUILT_PATCHES=debian/patches
 %:
 	dh $@
 
-override_dh_clean:
-	dh_clean
-
-	quilt pop -a || true
-
 override_dh_auto_build:
 	# no building required
-
-	quilt push -a
 
 override_dh_auto_install:
 	dh_auto_install
