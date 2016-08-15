@@ -1,10 +1,10 @@
 --- a/appinfo/info.xml
 +++ b/appinfo/info.xml
 @@ -5,6 +5,7 @@
-     <description>Securely communicate with your friends and family using rich audio-, video- and text chat, and much more right from your ownCloud installation – in your browser</description>
+     <description>Securely communicate with your friends and family using rich audio-, video- and text chat, and much more right from your Nextcloud installation – in your browser</description>
      <licence>AGPL</licence>
      <author>struktur AG</author>
 +    <default_enable/>
      <documentation>
-         <user>https://github.com/strukturag/owncloud-spreedme/blob/master/README.md</user>
-         <admin>https://github.com/strukturag/owncloud-spreedme/blob/master/README.md</admin>
+         <user>https://github.com/strukturag/nextcloud-spreedme/blob/master/README.md</user>
+         <admin>https://github.com/strukturag/nextcloud-spreedme/blob/master/README.md</admin>
