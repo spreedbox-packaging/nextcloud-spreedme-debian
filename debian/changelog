@@ -1,3 +1,10 @@
+nextcloud-spreedme (0.2.0-3) trusty; urgency=medium
+
+  * Build with "--parallel".
+  * Onyl install files to /etc if they don't exist yet.
+
+ -- Joachim Bauch <bauch@struktur.de>  Mon, 15 Aug 2016 16:46:51 +0200
+
 nextcloud-spreedme (0.2.0-2) trusty; urgency=medium
 
   * Updated docs to install.
