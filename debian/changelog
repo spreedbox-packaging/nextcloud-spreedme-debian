@@ -1,3 +1,45 @@
+nextcloud-spreedme (0.2.0-1) trusty; urgency=low
+
+  [ Leon Klingele ]
+  * One should not use the sample nginx config directly
+
+  [ Jan-Christoph Borchardt ]
+  * fix app icon to fit in the app dropdown style
+
+  [ Simon Eisenmann ]
+  * Make this app a Nextcloud app
+  * Fix docs to load the correct file
+  * Use variables and test with PHP7
+  * Need to move to work with phpunit
+  * Use variables and test with PHP7
+  * Need to move to work with phpunit
+  * Add Apache2 subpath docs
+  * Add Spreed WebRTC configuration details
+
+  [ Leon Klingele ]
+  * Make this app a Nextcloud app #2
+  * Fix changelog release name regex
+
+  [ Simon Eisenmann ]
+  * Fix load path of static icons
+  * Bring back extra support
+  * Update docs for Nginx and Apache
+  * Cleanup README, recommend same host only
+  * Add tl;dr install examples
+  * Add example config for Docker usage
+
+  [ Leon Klingele ]
+  * Add my changes to README and the nginx/Apache docs
+  * Move back to extra (not extra.d) installation steps
+  * 0.2.0
+
+  [ Joachim Bauch ]
+  * Added watch file to be used by uscan.
+  * Switch to "quilt" source format.
+  * Updated patch for new upstream version.
+
+ -- Joachim Bauch <bauch@struktur.de>  Mon, 15 Aug 2016 15:53:50 +0200
+
 nextcloud-spreedme (0.2.0~git20161720.0.2640b57-1) trusty; urgency=medium
 
   [ Jan-Christoph Borchardt ]
