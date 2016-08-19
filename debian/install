@@ -4,6 +4,7 @@ config/* usr/share/nextcloud-spreedme/config
 controller/*	usr/lib/nextcloud/www/apps/spreedme/controller
 css/*	usr/lib/nextcloud/www/apps/spreedme/css
 debug/*	usr/lib/nextcloud/www/apps/spreedme/debug
+errors/* usr/lib/nextcloud/www/apps/spreedme/errors
 extra/* usr/share/nextcloud-spreedme/extra
 helper/*	usr/lib/nextcloud/www/apps/spreedme/helper
 img/*	usr/lib/nextcloud/www/apps/spreedme/img
