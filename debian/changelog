@@ -1,3 +1,38 @@
+nextcloud-spreedme (0.3.1-1) trusty; urgency=medium
+
+  [ Simon Eisenmann ]
+  * Install python3-request from apt
+
+  [ Leon Klingele ]
+  * Fix GitLab CI
+  * Fix GitLab CI
+  * Move all error codes to ErrorCodes class
+  * Only show 'Generate Temporary Password' button if the feature is actually enabled
+  * Add TODO
+  * Fix 'Generate' TP button margin
+  * Add more fields to info.xml, which are apparently required by the Nextcloud App Store
+  * Rewrite user.php to get current user via NC
+  * Allow to configure the app via web interface if config/config.php does not exist
+  * README: Remove 'Upgrading this app' section
+  * README: Fix document location
+  * Add TODO
+  * Doc: Add missing line break
+  * Support running multiple Nextcloud instances with a single spreed-webrtc server
+  * 0.3.0
+  * Changelog: Add missing quote
+  * Update screenshots & remove duplicate ones
+  * Add conference animation
+  * Update app summary & description
+  * Add screenshots to info.xml
+  * 0.3.1
+
+  [ Joachim Bauch ]
+  * Install new folder "errors".
+  * Install new documentation.
+  * Updated patches for new upstream version.
+
+ -- Joachim Bauch <bauch@struktur.de>  Fri, 19 Aug 2016 16:13:56 +0200
+
 nextcloud-spreedme (0.2.0-3) trusty; urgency=medium
 
   * Build with "--parallel".
