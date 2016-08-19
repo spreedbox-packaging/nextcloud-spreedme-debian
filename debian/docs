@@ -1,6 +1,7 @@
 doc/API.txt
 doc/example-config-apache.md
 doc/example-config-nginx.md
+doc/running-on-different-origins.md
 AUTHORS.md
 CHANGELOG.md
 README.md
