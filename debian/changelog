@@ -1,3 +1,10 @@
+nextcloud-spreedme (0.3.1-2) trusty; urgency=medium
+
+  * Restart php-fpm through trigger (FS#3721).
+  * Trigger "spreed-webrtc" through "triggers" file instead manual call.
+
+ -- Joachim Bauch <bauch@struktur.de>  Mon, 12 Sep 2016 15:07:22 +0200
+
 nextcloud-spreedme (0.3.1-1) trusty; urgency=medium
 
   [ Simon Eisenmann ]
