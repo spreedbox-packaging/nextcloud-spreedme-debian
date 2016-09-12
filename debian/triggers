@@ -1,2 +1,3 @@
+activate spreed-webrtc
 activate spreedbox-restart-php-fpm
 interest /usr/lib/nextcloud/www/core/shipped.json
