@@ -1,6 +1,6 @@
 variables:
-  OWNCLOUD_BRANCH: master
-  OWNCLOUD_DATABASE: mysql
+  NC_BRANCH: master
+  NC_DATABASE: mysql
 
 runtests:
   script:
