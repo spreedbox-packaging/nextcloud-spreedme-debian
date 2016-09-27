@@ -72,6 +72,7 @@ cp config/config.php.in config/config.php
 cp extra/static/config/OwnCloudConfig.js.in extra/static/config/OwnCloudConfig.js
 cd ../../..
 cd nextcloud
+
 ./occ -vvv maintenance:install \
     --database-name oc_autotest \
     --database-user oc_autotest \
