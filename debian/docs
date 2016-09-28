@@ -2,6 +2,7 @@ doc/API.txt
 doc/example-config-apache.md
 doc/example-config-nginx.md
 doc/running-on-different-origins.md
+doc/spreed-webrtc-minimal-config.txt
 AUTHORS.md
 CHANGELOG.md
 README.md
