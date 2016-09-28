@@ -1,3 +1,24 @@
+nextcloud-spreedme (0.3.2-1) trusty; urgency=medium
+
+  [ Joachim Bauch ]
+  * Move common CI setup code to separate script.
+
+  [ Leon Klingele ]
+  * Update API doc
+  * Describe new admin/config API endpoints
+  * Always hide logo
+  * nginx: Perform no other regex matching
+  * Check for existence of constant before using it
+  * Fix incorrect use of '$this' when accessing a static method
+  * Auto-generate minimal Spreed WebRTC config via Admin web interface
+  * Use Nextcloud for CI tests
+  * 0.3.2
+
+  [ Joachim Bauch ]
+  * Install new documentation file.
+
+ -- Joachim Bauch <bauch@struktur.de>  Wed, 28 Sep 2016 10:33:35 +0200
+
 nextcloud-spreedme (0.3.1-2) trusty; urgency=medium
 
   * Restart php-fpm through trigger (FS#3721).
