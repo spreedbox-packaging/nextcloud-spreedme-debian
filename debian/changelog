@@ -1,3 +1,14 @@
+nextcloud-spreedme (0.3.3-1) trusty; urgency=medium
+
+  [ Leon Klingele ]
+  * 'baseURL' should also include document.origin (protocol + domain + port) (fixes URL problem from #48)
+  * Debug: Don't hard-code path to OwnCloudConfig.js (fix #50)
+  * Debug: Do not run 'testOwncloudJavascriptConfigFile' if OwnCloudConfig.js doesn't exist
+  * Redirect to the correct Nextcloud login page (including a proper redirect URL)
+  * 0.3.3
+
+ -- Joachim Bauch <bauch@struktur.de>  Fri, 21 Oct 2016 09:05:49 +0200
+
 nextcloud-spreedme (0.3.2-1) trusty; urgency=medium
 
   [ Joachim Bauch ]
