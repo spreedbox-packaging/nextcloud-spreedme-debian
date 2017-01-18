@@ -1,3 +1,13 @@
+nextcloud-spreedme (0.3.6-1) trusty; urgency=medium
+
+  [ Leon Klingele ]
+  * Try to detect if we need to return a www-root value when auto generating the Spreed WebRTC config
+  * Auto config: 'success' instead of 'warning' when we succeed
+  * Increase max ownCloud / Nextcloud compatibility version
+  * 0.3.6
+
+ -- Joachim Bauch <bauch@struktur.de>  Wed, 18 Jan 2017 08:43:13 +0100
+
 nextcloud-spreedme (0.3.5-1) trusty; urgency=medium
 
   [ Leon Klingele ]
