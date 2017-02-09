@@ -1,3 +1,13 @@
+nextcloud-spreedme (0.3.7-1) trusty; urgency=medium
+
+  [ Leon Klingele ]
+  * Fix API to retrieve URL to Spreed WebRTC
+  * Fix namespace to catch exception
+  * Use proper variable name in debug check
+  * 0.3.7
+
+ -- Joachim Bauch <bauch@struktur.de>  Thu, 09 Feb 2017 08:58:02 +0100
+
 nextcloud-spreedme (0.3.6-1) trusty; urgency=medium
 
   [ Leon Klingele ]
