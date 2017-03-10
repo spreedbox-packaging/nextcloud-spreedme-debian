@@ -1,3 +1,17 @@
+nextcloud-spreedme (0.3.8-1) trusty; urgency=medium
+
+  [ Leon Klingele ]
+  * Use 'mb_strlen' instead of 'strlen' for calculating a string's length
+
+  [ Joachim Bauch ]
+  * Support standalone mode that renders template without header/footer.
+
+  [ Leon Klingele ]
+  * Fix standalone mode
+  * 0.3.8
+
+ -- Joachim Bauch <bauch@struktur.de>  Fri, 10 Mar 2017 12:53:10 +0100
+
 nextcloud-spreedme (0.3.7-1) trusty; urgency=medium
 
   [ Leon Klingele ]
