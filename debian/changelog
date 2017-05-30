@@ -1,3 +1,14 @@
+nextcloud-spreedme (0.3.9-1) trusty; urgency=medium
+
+  [ Leon Klingele ]
+  * Use distinct error code for 'REMOTE_CONFIG_INVALID_JSON'
+  * Add todos
+  * Add support for Nextcloud 12 (beta)
+  * Use array_map to determine sub admin groups
+  * 0.3.9
+
+ -- Joachim Bauch <bauch@struktur.de>  Tue, 30 May 2017 13:32:44 +0200
+
 nextcloud-spreedme (0.3.8-1) trusty; urgency=medium
 
   [ Leon Klingele ]
