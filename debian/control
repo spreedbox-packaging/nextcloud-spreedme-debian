@@ -13,6 +13,7 @@ Standards-Version: 3.9.5
 Package: nextcloud-spreedme
 Architecture: all
 Depends:
+ nextcloud-server,
  spreedbox-php (>= 0.1.1),
  ${misc:Depends}
 Provides:
