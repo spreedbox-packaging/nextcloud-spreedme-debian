@@ -1,3 +1,9 @@
+nextcloud-spreedme (0.3.9-2) trusty; urgency=medium
+
+  * Depend on "nextcloud-server".
+
+ -- Joachim Bauch <bauch@struktur.de>  Wed, 14 Jun 2017 11:52:15 +0200
+
 nextcloud-spreedme (0.3.9-1) trusty; urgency=medium
 
   [ Leon Klingele ]
