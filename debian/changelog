@@ -1,3 +1,9 @@
+nextcloud-spreedme (0.3.9-3) trusty; urgency=medium
+
+  * Change branding to "SecureMeet" to match Android app.
+
+ -- Joachim Bauch <bauch@struktur.de>  Mon, 19 Jun 2017 16:25:12 +0200
+
 nextcloud-spreedme (0.3.9-2) trusty; urgency=medium
 
   * Depend on "nextcloud-server".
